@@ -14,11 +14,14 @@ def get_name(headers, url):
 
     result = []
 
+    counter = 1
+
     for i in names[2:]:
         span = i.find("span")
         if span:
             if "GallerySlideCaptionHedText" in str(span.get("class")):
-                result.append(span.text)
+                result.append(f"{counter}. {span.text}")
+                counter += 1
 
     return result
 
@@ -60,10 +63,12 @@ def combine(headers, url):
 def main():
     while True:
         try:
+            print("starting Scraping ...\n")
             combine(headers, url)
+            input()
             break
         except Exception as e:
-            print("Etwas ist schiefgelaufen,\n" , e, " \nversuche nochmal...")
+            print("something went wrong,\n" , e, " \nretrying ...\n")
             time.sleep(2.0)
             continue
 
